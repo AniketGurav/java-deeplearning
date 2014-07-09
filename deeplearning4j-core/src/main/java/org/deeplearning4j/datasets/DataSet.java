@@ -43,6 +43,8 @@ public class DataSet extends Pair<DoubleMatrix,DoubleMatrix> implements Persista
     private static Logger log = LoggerFactory.getLogger(DataSet.class);
     private List<String> columnNames = new ArrayList<>();
     private List<String> labelNames = new ArrayList<>();
+    
+    private List<DataSet> dataSetList = null;
 
     public DataSet() {
         this(DoubleMatrix.zeros(1),DoubleMatrix.zeros(1));
@@ -409,11 +411,14 @@ public class DataSet extends Pair<DoubleMatrix,DoubleMatrix> implements Persista
 
 
     public List<DataSet> asList() {
-        List<DataSet> list = new ArrayList<DataSet>(numExamples());
-        for(int i = 0; i < numExamples(); i++)  {
-            list.add(new DataSet(getFirst().getRow(i),getSecond().getRow(i)));
-        }
-        return list;
+    	
+		if (dataSetList == null) {
+			dataSetList = new ArrayList<DataSet>(numExamples());
+			for (int i = 0; i < numExamples(); i++) {
+				dataSetList.add(new DataSet(getFirst().getRow(i), getSecond().getRow(i)));
+			}
+		}
+		return dataSetList;
     }
 
     public Pair<DataSet,DataSet> splitTestAndTrain(int numHoldout) {
