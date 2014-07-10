@@ -37,6 +37,15 @@ public class Convolution {
     }
 
 
+    public static DoubleMatrix convn(DoubleMatrix input,DoubleMatrix kernel,Type type) {
+         int dims = Math.max(MatrixUtil.numDims(input),MatrixUtil.numDims(kernel));
+         for(int i = 0; i < dims; i++) {
+             
+         }
+         return input;
+    }
+
+
     public static DoubleMatrix conv2d(DoubleMatrix input,DoubleMatrix kernel,Type type) {
 
         DoubleMatrix xShape = new DoubleMatrix(1,2);
@@ -58,6 +67,7 @@ public class Convolution {
         ComplexDoubleMatrix mul = fftKernel.mul(fftInput);
         ComplexDoubleMatrix retComplex = complexInverseDisceteFourierTransform(mul);
         DoubleMatrix ret = retComplex.getReal();
+
         if(type == Type.VALID) {
 
             DoubleMatrix validShape = xShape.subi(yShape).add(1);
@@ -81,8 +91,11 @@ public class Convolution {
 
 
 
+
+
+
     public static ComplexDoubleMatrix complexInverseDisceteFourierTransform(ComplexDoubleMatrix input,int rows,int cols) {
-        ComplexDoubleMatrix base = null;
+        ComplexDoubleMatrix base;
 
         //pad
         if(input.rows < rows || input.columns < cols)
@@ -230,7 +243,7 @@ public class Convolution {
      * @return the discrete fourier transform of the input
      */
     public static ComplexDoubleMatrix complexDisceteFourierTransform(DoubleMatrix input,int rows,int cols) {
-        ComplexDoubleMatrix base = null;
+        ComplexDoubleMatrix base;
 
         //pad
         if(input.rows < rows || input.columns < cols)
